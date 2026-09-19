@@ -132,7 +132,6 @@ Projek Website Sistem Pakar/
 ├── train_model.py                               # Headless retraining script
 ├── Stock_Trading_Categorical_Dataset_Large.csv  # Working dataset (1,000 rows)
 ├── Stock_Trading_Categorical_Dataset_Large.original.csv
-├── Stock_Trading_Categorical_Dataset_Large(before).csv
 ├── mymodel.pkl                                  # Trained pipeline (encoder + tree)
 ├── rules.txt                                    # Raw export_text() output
 ├── rules_human.txt                              # Plain-language IF-THEN rules
