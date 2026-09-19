@@ -35,9 +35,6 @@ The knowledge base is not hand-written. It is *learned* from a labelled dataset 
 
 ## Website Preview
 
-> Drop your screenshots into `docs/screenshots/` and they will render here automatically.
-> Recommended: full-page captures at **1440 × 900**, saved as `.png`.
-
 ### Dashboard — Signal Map & Decision Tree
 
 <p align="center">
