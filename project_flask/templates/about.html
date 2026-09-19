@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block title %}About{% endblock %} {% block content %}
+<section class="about-layout">
+  <div class="profile-visual">
+    <div class="profile-grid"></div>
+    <div class="avatar"><img src="{{ url_for('static', filename='images/daffi.jpeg') }}" alt="Muhammad Daffi Izzuddin"></div>
+    <span class="orbit orbit-one"></span><span class="orbit orbit-two"></span>
+    <div class="profile-code mono">DEV_PROFILE<br /><span>STATUS: ACTIVE</span><br />POLMAN / 24</div>
+  </div>
+  <div class="profile-copy">
+    <p class="eyebrow"><span class="eyebrow-line"></span>About the builder / 05</p>
+    <h1>Muhammad Daffi<br /><em>Izzuddin.</em></h1>
+    <p class="about-lead">Saya merancang SignalTree sebagai tempat belajar machine learning bertemakan Stock(Saham) yang interaktif, dan memberikan jawaban prediksi aksi dari tindakan yang diinputkan.</p>
+    <div class="profile-details">
+      <div><span>NIM</span><strong>224443013</strong></div>
+      <div><span>KELAS / PROGRAM STUDI</span><strong>Teknologi Rekayasa Informatika Industri</strong></div>
+      <div><span>INSTITUSI</span><strong>Politeknik Manufaktur Bandung</strong></div>
+      <div><span>PROJECT ROLE</span><strong>Machine Learning · UI / UX · Flask</strong></div>
+    </div>
+    <div class="about-note">
+      <span>✦</span>
+      <p>“Bikin AI itu bukan cuma nyari hasil akhir, tapi ngebangun logika yang bisa ditelusuri dan masuk akal."</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

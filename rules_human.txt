@@ -1,0 +1,29 @@
+JIKA Status Orderbook BUKAN Kuat Bid DAN Broker Summary BUKAN Akumulasi DAN Tren Harga BUKAN Uptrend
+MAKA Keputusan = Wait
+
+JIKA Status Orderbook BUKAN Kuat Bid DAN Broker Summary BUKAN Akumulasi DAN Tren Harga ADALAH Uptrend DAN Volume Transaksi BUKAN Rendah
+MAKA Keputusan = Buy
+
+JIKA Status Orderbook BUKAN Kuat Bid DAN Broker Summary BUKAN Akumulasi DAN Tren Harga ADALAH Uptrend DAN Volume Transaksi ADALAH Rendah
+MAKA Keputusan = Wait
+
+JIKA Status Orderbook BUKAN Kuat Bid DAN Broker Summary ADALAH Akumulasi DAN Volume Transaksi BUKAN Tinggi DAN Tren Harga BUKAN Uptrend
+MAKA Keputusan = Wait
+
+JIKA Status Orderbook BUKAN Kuat Bid DAN Broker Summary ADALAH Akumulasi DAN Volume Transaksi BUKAN Tinggi DAN Tren Harga ADALAH Uptrend
+MAKA Keputusan = Buy
+
+JIKA Status Orderbook BUKAN Kuat Bid DAN Broker Summary ADALAH Akumulasi DAN Volume Transaksi ADALAH Tinggi
+MAKA Keputusan = Buy
+
+JIKA Status Orderbook ADALAH Kuat Bid DAN Volume Transaksi BUKAN Rendah
+MAKA Keputusan = Buy
+
+JIKA Status Orderbook ADALAH Kuat Bid DAN Volume Transaksi ADALAH Rendah DAN Tren Harga BUKAN Uptrend DAN Broker Summary BUKAN Akumulasi
+MAKA Keputusan = Wait
+
+JIKA Status Orderbook ADALAH Kuat Bid DAN Volume Transaksi ADALAH Rendah DAN Tren Harga BUKAN Uptrend DAN Broker Summary ADALAH Akumulasi
+MAKA Keputusan = Buy
+
+JIKA Status Orderbook ADALAH Kuat Bid DAN Volume Transaksi ADALAH Rendah DAN Tren Harga ADALAH Uptrend
+MAKA Keputusan = Buy

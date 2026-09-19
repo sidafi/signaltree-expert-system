@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% block title %}Prediction Desk{% endblock %} {% block content %}
+<section class="prediction-header">
+  <div>
+    <p class="eyebrow"><span class="eyebrow-line"></span>Prediction desk / 04</p>
+    <h1>Assemble your<br /><em>market signal.</em></h1>
+  </div>
+  <p>Masukkan kondisi pasar saat ini. Model akan melewatkan input melalui encoder dan pohon keputusan untuk menghasilkan kesimpulan yang transparan.</p>
+</section>
+<section class="prediction-layout">
+  <form class="signal-form" method="POST" action="{{ url_for('prediksi') }}">
+    <div class="form-head"><span class="panel-label">SIGNAL INPUTS</span><span class="mono">4 / 4 required</span></div>
+    <div class="field-grid">
+      <label class="field"
+        ><span>01 · Status Orderbook</span><small>Tekanan bid atau offer</small
+        ><select name="status_orderbook" required>
+          <option value="Kuat Bid">Kuat Bid</option>
+          <option value="Kuat Offer">Kuat Offer</option>
+        </select></label
+      ><label class="field"
+        ><span>02 · Broker Summary</span><small>Dominasi pelaku pasar</small
+        ><select name="broker_summary" required>
+          <option value="Akumulasi">Akumulasi</option>
+          <option value="Netral">Netral</option>
+          <option value="Distribusi">Distribusi</option>
+        </select></label
+      ><label class="field"
+        ><span>03 · Volume Transaksi</span><small>Intensitas aktivitas</small
+        ><select name="volume_transaksi" required>
+          <option value="Tinggi">Tinggi</option>
+          <option value="Rendah">Rendah</option>
+        </select></label
+      ><label class="field"
+        ><span>04 · Tren Harga</span><small>Arah momentum utama</small
+        ><select name="tren_harga" required>
+          <option value="Uptrend">Uptrend</option>
+          <option value="Sideways">Sideways</option>
+          <option value="Downtrend">Downtrend</option>
+        </select></label
+      >
+    </div>
+    <button class="button button-primary submit-button" type="submit">Run decision engine <span>↗</span></button>
+  </form>
+  <aside class="result-panel">
+    <div class="result-top"><span class="panel-label">OUTPUT / CLASSIFICATION</span><span class="status-dot"></span></div>
+    {% if hasil %}
+    <div class="result-live">
+      <span class="result-kicker">MODEL CONCLUSION</span><strong class="result-value {{ 'buy-result' if hasil == 'Buy' else 'wait-result' }}">{{ hasil }}</strong>
+      <p>Kesimpulan dibuat dari kombinasi empat sinyal yang kamu masukkan dan aturan entropy pada model ID3.</p>
+      <div class="result-meta"><span>Traceable logic</span><span>Decision Tree</span></div>
+    </div>
+    {% else %}
+    <div class="result-empty">
+      <div class="empty-orbit">?</div>
+      <h2>Awaiting signal</h2>
+      <p>Isi empat input di samping untuk menjalankan satu putaran inferensi.</p>
+    </div>
+    {% endif %}
+    <div class="result-foot"><span>MODEL STATUS</span><strong>READY · ID3</strong></div>
+  </aside>
+</section>
+{% endblock %}

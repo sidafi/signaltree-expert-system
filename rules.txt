@@ -1,0 +1,28 @@
+|--- Status_Orderbook_Kuat Bid <= 0.50
+|   |--- Broker_Summary_Akumulasi <= 0.50
+|   |   |--- Tren_Harga_Uptrend <= 0.50
+|   |   |   |--- class: Wait
+|   |   |--- Tren_Harga_Uptrend >  0.50
+|   |   |   |--- Volume_Transaksi_Rendah <= 0.50
+|   |   |   |   |--- class: Buy
+|   |   |   |--- Volume_Transaksi_Rendah >  0.50
+|   |   |   |   |--- class: Wait
+|   |--- Broker_Summary_Akumulasi >  0.50
+|   |   |--- Volume_Transaksi_Tinggi <= 0.50
+|   |   |   |--- Tren_Harga_Uptrend <= 0.50
+|   |   |   |   |--- class: Wait
+|   |   |   |--- Tren_Harga_Uptrend >  0.50
+|   |   |   |   |--- class: Buy
+|   |   |--- Volume_Transaksi_Tinggi >  0.50
+|   |   |   |--- class: Buy
+|--- Status_Orderbook_Kuat Bid >  0.50
+|   |--- Volume_Transaksi_Rendah <= 0.50
+|   |   |--- class: Buy
+|   |--- Volume_Transaksi_Rendah >  0.50
+|   |   |--- Tren_Harga_Uptrend <= 0.50
+|   |   |   |--- Broker_Summary_Akumulasi <= 0.50
+|   |   |   |   |--- class: Wait
+|   |   |   |--- Broker_Summary_Akumulasi >  0.50
+|   |   |   |   |--- class: Buy
+|   |   |--- Tren_Harga_Uptrend >  0.50
+|   |   |   |--- class: Buy

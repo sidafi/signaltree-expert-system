@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}SignalTree{% endblock %} · Sistem Pakar Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <nav class="topbar">
+        <a class="brand" href="{{ url_for('dashboard') }}"
+          ><span class="brand-mark">ST</span><span>Signal<span class="brand-accent">Tree</span></span></a
+        >
+        <div class="nav-links">
+          <a class="{% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">Dashboard</a>
+          <a class="{% if request.endpoint == 'prediksi' %}active{% endif %}" href="{{ url_for('prediksi') }}">Prediction</a>
+          <a class="{% if request.endpoint == 'tentang' %}active{% endif %}" href="{{ url_for('tentang') }}">About</a>
+        </div>
+        <a class="status-pill" href="{{ url_for('prediksi') }}"><span class="status-dot"></span>Model online</a>
+      </nav>
+      <main class="page-wrap">{% block content %}{% endblock %}</main>
+      <footer class="footer"><span>SignalTree / Decision intelligence lab</span><span>Built for Politeknik Manufaktur Bandung · 2026</span></footer>
+    </div>
+  </body>
+</html>

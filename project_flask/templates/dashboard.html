@@ -1,0 +1,416 @@
+{% extends 'base.html' %} {% block title %}Dashboard{% endblock %} {% block content %}
+
+<section class="hero-grid">
+  <div class="hero-copy reveal">
+    <p class="eyebrow"><span class="eyebrow-line"></span>Intelligence / 01</p>
+    <h1>Read the market.<br /><em>Make the move.</em></h1>
+    <p class="hero-text">Sistem pakar yang menerjemahkan sinyal trading menjadi keputusan yang dapat dijelaskan. Bukan kotak hitam, melainkan alur logika yang bisa ditelusuri.</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="{{ url_for('prediksi') }}">Buka prediction desk <span>↗</span></a
+      ><a class="text-link" href="#decision-tree">Lihat logika model <span>↓</span></a>
+    </div>
+  </div>
+  <div class="signal-board reveal delay-1">
+    <div class="board-head"><span>LIVE / SIGNAL MAP</span><span class="mono">ID · 42A7</span></div>
+    <div class="board-graph">
+      <div class="graph-grid"></div>
+      <span class="graph-label label-a">BUY ZONE</span><span class="graph-label label-b">WAIT ZONE</span
+      ><svg viewBox="0 0 500 220" preserveAspectRatio="none" aria-label="Visualisasi sinyal market">
+        <path class="graph-fill" d="M0 190 C55 180, 58 148, 103 158 S140 120, 188 134 S225 67, 266 93 S316 50, 354 77 S393 24, 435 46 S470 23, 500 12 L500 220 L0 220Z" />
+        <path class="graph-line" d="M0 190 C55 180, 58 148, 103 158 S140 120, 188 134 S225 67, 266 93 S316 50, 354 77 S393 24, 435 46 S470 23, 500 12" /></svg
+      ><span class="pulse-node node-1"></span><span class="pulse-node node-2"></span><span class="pulse-node node-3"></span>
+    </div>
+    <div class="board-foot">
+      <span><i class="legend buy"></i>Decision confidence</span><strong>87.4%</strong><span class="up">↗ +12.8%</span>
+    </div>
+  </div>
+</section>
+
+<section class="metric-strip reveal delay-2">
+  <div><span class="metric-value">4</span><span class="metric-label">input signals</span></div>
+  <div><span class="metric-value">ID3</span><span class="metric-label">entropy engine</span></div>
+  <div><span class="metric-value">2</span><span class="metric-label">output classes</span></div>
+  <div><span class="metric-value">1</span><span class="metric-label">clear conclusion</span></div>
+</section>
+
+<section class="section-block" id="decision-tree">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow"><span class="eyebrow-line"></span>How it thinks / 02</p>
+      <h2>Dari data menjadi keputusan.</h2>
+    </div>
+    <p>Setiap cabang memecah kemungkinan sampai model menemukan kelas yang paling konsisten: <strong>Buy</strong> atau <strong>Wait</strong>.</p>
+  </div>
+
+  <div class="tree-layout">
+    <div class="tree-canvas actual-tree" aria-label="Decision tree interaktif hasil retraining dari notebook">
+      <div class="tree-image-header"><span class="panel-label">DECISION TREE (Pohon Keputusan) / 19 NODES</span><span class="mono">EDA.IPYNB · ID3</span></div>
+
+      <style>
+        /* ==== Struktur pohon nested (di-scope, tidak menyentuh style global) ==== */
+        .decision-tree-diagram {
+          overflow-x: auto;
+          padding: 48px 12px 24px;
+        }
+        .decision-tree-diagram ul {
+          padding-top: 28px;
+          position: relative;
+          display: flex;
+          justify-content: center;
+        }
+        .decision-tree-diagram li {
+          list-style-type: none;
+          position: relative;
+          padding: 28px 10px 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .decision-tree-diagram li::before,
+        .decision-tree-diagram li::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 50%;
+          border-top: 2px solid rgba(120, 120, 140, 0.35);
+          width: 50%;
+          height: 28px;
+        }
+        .decision-tree-diagram li::after {
+          right: auto;
+          left: 50%;
+          border-left: 2px solid rgba(120, 120, 140, 0.35);
+        }
+        .decision-tree-diagram li:only-child::before,
+        .decision-tree-diagram li:only-child::after {
+          display: none;
+        }
+        .decision-tree-diagram li:only-child {
+          padding-top: 0;
+        }
+        .decision-tree-diagram li:first-child::before,
+        .decision-tree-diagram li:last-child::after {
+          border: 0 none;
+        }
+        .decision-tree-diagram li:last-child::before {
+          border-right: 2px solid rgba(120, 120, 140, 0.35);
+          border-radius: 0 6px 0 0;
+        }
+        .decision-tree-diagram li:first-child::after {
+          border-radius: 6px 0 0 0;
+        }
+        .decision-tree-diagram ul ul::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 50%;
+          border-left: 2px solid rgba(120, 120, 140, 0.35);
+          width: 0;
+          height: 28px;
+        }
+        .decision-tree-diagram .branch-tag {
+          font-size: 0.62rem;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          padding: 2px 8px;
+          border-radius: 999px;
+          margin-bottom: 6px;
+          white-space: nowrap;
+        }
+        .decision-tree-diagram .branch-tag.true {
+          background: rgba(64, 145, 222, 0.15);
+          color: #3178c6;
+        }
+        .decision-tree-diagram .branch-tag.false {
+          background: rgba(224, 132, 58, 0.15);
+          color: #c96a1c;
+        }
+
+        /* ==== Fitur "node-help": penjelasan muncul di bawah kotak saat hover/focus ==== */
+        .decision-tree-diagram .node-help {
+          display: block;
+          max-height: 0;
+          overflow: hidden;
+          opacity: 0;
+          font-size: 0.72rem;
+          line-height: 1.4;
+          margin-top: 0;
+          transition:
+            max-height 0.25s ease,
+            opacity 0.25s ease,
+            margin-top 0.25s ease;
+        }
+        .decision-tree-diagram .tree-node:hover .node-help,
+        .decision-tree-diagram .tree-node:focus .node-help,
+        .decision-tree-diagram .tree-node:focus-within .node-help {
+          max-height: 160px;
+          opacity: 1;
+          margin-top: 8px;
+        }
+
+        /* ==== Layout compact agar seluruh cabang tetap masuk canvas ==== */
+        .decision-tree-diagram {
+          overflow-x: auto; /* Memunculkan slider horizontal */
+          overflow-y: visible;
+          padding: 30px 0 40px 0;
+          width: 100%; /* Mengikuti lebar container */
+          text-align: center;
+        }
+
+        /* Tambahkan rule ini agar cabang tree memaksa area scroll melebar */
+        .decision-tree-diagram > ul {
+          display: inline-flex; /* Kunci 2: Inline-flex mencegah potongan (clipping) di sisi kiri */
+          min-width: max-content;
+          padding: 0 40px; /* Memberikan ruang lega di ujung kiri dan kanan slider */
+          margin: 0 auto;
+          text-align: left; /* Mengembalikan perataan teks normal untuk anak-anaknya */
+        }
+        .decision-tree-diagram ul {
+          margin: 0;
+          min-width: 0;
+          padding-left: 0;
+          padding-right: 0;
+          padding-top: 20px;
+        }
+        .decision-tree-diagram li {
+          min-width: 0;
+          padding: 20px 5px 0;
+        }
+        .decision-tree-diagram .tree-node,
+        .decision-tree-diagram .decision-node {
+          max-width: 160px; /* Sedikit dilebarkan agar teks lebih lega */
+          min-width: 138px;
+          overflow-wrap: anywhere;
+          padding: 24px 26px; /* Padding bawah/atas diperbesar */
+          width: auto;
+          height: auto; /* Memaksa kotak memanjang ke bawah mengikuti teks */
+          min-height: fit-content;
+        }
+        .decision-tree-diagram .root-flow {
+          max-width: 168px;
+          width: 168px;
+        }
+        .decision-tree-diagram .tree-node strong {
+          font-size: 14px;
+          line-height: 1.1;
+          margin: 5px 0;
+        }
+        .decision-tree-diagram .tree-node small,
+        .decision-tree-diagram .decision-node small {
+          font-size: 7px;
+          line-height: 1.35;
+          white-space: normal;
+        }
+        .decision-tree-diagram .node-kicker {
+          font-size: 7px;
+          line-height: 1.25;
+          white-space: normal;
+        }
+        .decision-tree-diagram .branch-tag {
+          font-size: 7px;
+          max-width: 130px;
+          overflow-wrap: anywhere;
+          padding: 2px 5px;
+          text-align: center;
+          white-space: normal;
+        }
+        .decision-tree-diagram .node-help {
+          font-size: 9px;
+          overflow-wrap: anywhere;
+        }
+        .tree-image-badge {
+          bottom: 45px !important; /* Mengangkat posisi badge setinggi area scrollbar */
+          z-index: 10; /* Memastikan badge tidak tertimpa elemen lain */
+        }
+        @media (max-width: 800px) {
+          .decision-tree-diagram {
+            padding-top: 24px;
+            zoom: 0.62;
+            width: 161%;
+          }
+        }
+        @media (max-width: 480px) {
+          .decision-tree-diagram {
+            zoom: 0.5;
+            width: 200%;
+          }
+        }
+      </style>
+
+      <div class="decision-tree-diagram">
+        <ul>
+          <li>
+            <div class="tree-node flow-node root-flow" tabindex="0" title="Akar tree: model pertama kali memeriksa apakah orderbook memiliki Kuat Bid.">
+              <span class="node-kicker">ROOT SPLIT · 01</span><strong>Status Orderbook</strong><small>Kuat Bid ≤ 0.5</small>
+              <span class="node-help">True (bukan Kuat Bid) → jalur kiri: Broker Summary. False (Kuat Bid) → jalur kanan: Volume Transaksi.</span>
+            </div>
+            <ul>
+              <!-- ===== CABANG KIRI: bukan Kuat Bid ===== -->
+              <li>
+                <span class="branch-tag true">TRUE · bukan Kuat Bid</span>
+                <div class="tree-node flow-node" tabindex="0" title="Jalur kiri dari root memeriksa apakah broker melakukan akumulasi.">
+                  <span class="node-kicker">SPLIT · 02A</span><strong>Broker Summary</strong><small>Akumulasi ≤ 0.5</small>
+                  <span class="node-help">True → jalur kiri memeriksa Tren Harga. False (akumulasi terkonfirmasi) → jalur kanan memeriksa Volume Transaksi Tinggi.</span>
+                </div>
+                <ul>
+                  <li>
+                    <span class="branch-tag true">TRUE · bukan akumulasi</span>
+                    <div class="tree-node flow-node compact" tabindex="0" title="Tanpa akumulasi, tren harga menentukan Wait atau potensi Buy.">
+                      <span class="node-kicker">SPLIT · 03A</span><strong>Tren Harga</strong><small>Uptrend ≤ 0.5</small>
+                      <span class="node-help">True (belum Uptrend) → langsung Wait. False (Uptrend) → cek Volume Transaksi Rendah.</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <span class="branch-tag true">TRUE · belum uptrend</span>
+                        <div class="decision-node wait flow-leaf" tabindex="0" title="Tanpa akumulasi dan tren belum Uptrend → Wait (245 sampel murni)."><span>WAIT</span><small>tren belum kuat</small></div>
+                      </li>
+                      <li>
+                        <span class="branch-tag false">FALSE · uptrend</span>
+                        <div class="tree-node flow-node compact" tabindex="0" title="Pada tren Uptrend tanpa akumulasi, volume rendah menjadi penentu akhir.">
+                          <span class="node-kicker">SPLIT · 04A</span><strong>Volume Transaksi</strong><small>Rendah ≤ 0.5</small>
+                          <span class="node-help">True (volume rendah) → tetap Buy. False → Wait.</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <span class="branch-tag true">TRUE · rendah</span>
+                            <div class="decision-node buy flow-leaf" tabindex="0" title="Uptrend tanpa akumulasi dengan volume rendah tetap mengarah ke Buy (50 sampel murni)."><span>BUY</span><small>uptrend cukup kuat</small></div>
+                          </li>
+                          <li>
+                            <span class="branch-tag false">FALSE · tidak rendah</span>
+                            <div class="decision-node wait flow-leaf" tabindex="0" title="Volume tidak rendah namun sinyal lain belum cukup → Wait (66 sampel murni)."><span>WAIT</span><small>sinyal belum cukup</small></div>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="branch-tag false">FALSE · akumulasi</span>
+                    <div class="tree-node flow-node compact" tabindex="0" title="Setelah akumulasi terkonfirmasi, volume tinggi memperkuat sinyal Buy.">
+                      <span class="node-kicker">SPLIT · 03B</span><strong>Volume Transaksi</strong><small>Tinggi ≤ 0.5</small>
+                      <span class="node-help">True (volume belum tinggi) → cek Tren Harga. False (volume tinggi) → langsung Buy.</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <span class="branch-tag true">TRUE · belum tinggi</span>
+                        <div class="tree-node flow-node compact" tabindex="0" title="Volume belum tinggi meski sudah akumulasi, tren harga jadi penentu akhir.">
+                          <span class="node-kicker">SPLIT · 04B</span><strong>Tren Harga</strong><small>Uptrend ≤ 0.5</small>
+                          <span class="node-help">True (belum Uptrend) → Wait. False (Uptrend) → Buy.</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <span class="branch-tag true">TRUE · belum uptrend</span>
+                            <div class="decision-node wait flow-leaf" tabindex="0" title="Belum ada Uptrend meski sudah akumulasi dan volume belum tinggi → Wait (50 sampel murni)."><span>WAIT</span><small>tren belum konfirmasi</small></div>
+                          </li>
+                          <li>
+                            <span class="branch-tag false">FALSE · uptrend</span>
+                            <div class="decision-node buy flow-leaf" tabindex="0" title="Tren Uptrend melengkapi sinyal akumulasi → Buy (19 sampel murni)."><span>BUY</span><small>akumulasi + uptrend</small></div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span class="branch-tag false">FALSE · volume tinggi</span>
+                        <div class="decision-node buy flow-leaf" tabindex="0" title="Akumulasi dikonfirmasi dengan volume transaksi tinggi → Buy (74 sampel murni)."><span>BUY</span><small>aktivitas tinggi</small></div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- ===== CABANG KANAN: Kuat Bid ===== -->
+              <li>
+                <span class="branch-tag false">FALSE · Kuat Bid</span>
+                <div class="tree-node flow-node" tabindex="0" title="Jalur kanan dari root memeriksa level volume transaksi.">
+                  <span class="node-kicker">SPLIT · 02B</span><strong>Volume Transaksi</strong><small>Rendah ≤ 0.5</small>
+                  <span class="node-help">True (volume rendah) → langsung Buy. False → jalur kanan memeriksa Tren Harga.</span>
+                </div>
+                <ul>
+                  <li>
+                    <span class="branch-tag true">TRUE · rendah</span>
+                    <div class="decision-node buy flow-leaf" tabindex="0" title="Volume rendah saat Kuat Bid memberi sinyal Buy paling kuat (256 sampel murni)."><span>BUY</span><small>volume rendah + kuat bid</small></div>
+                  </li>
+                  <li>
+                    <span class="branch-tag false">FALSE · tidak rendah</span>
+                    <div class="tree-node flow-node compact" tabindex="0" title="Saat volume tidak rendah, tren harga membedakan potensi Buy dari kebutuhan konfirmasi broker.">
+                      <span class="node-kicker">SPLIT · 03C</span><strong>Tren Harga</strong><small>Uptrend ≤ 0.5</small>
+                      <span class="node-help">True (belum Uptrend) → cek Broker Summary. False (Uptrend) → langsung Buy.</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <span class="branch-tag true">TRUE · belum uptrend</span>
+                        <div class="tree-node flow-node compact" tabindex="0" title="Tanpa uptrend dan volume tidak rendah, akumulasi broker jadi penentu akhir.">
+                          <span class="node-kicker">SPLIT · 04C</span><strong>Broker Summary</strong><small>Akumulasi ≤ 0.5</small>
+                          <span class="node-help">True (bukan akumulasi) → Wait. False (akumulasi) → Buy.</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <span class="branch-tag true">TRUE · bukan akumulasi</span>
+                            <div class="decision-node wait flow-leaf" tabindex="0" title="Tanpa uptrend, volume tidak rendah, dan tanpa akumulasi → Wait (105 sampel murni)."><span>WAIT</span><small>belum ada dukungan</small></div>
+                          </li>
+                          <li>
+                            <span class="branch-tag false">FALSE · akumulasi</span>
+                            <div class="decision-node buy flow-leaf" tabindex="0" title="Akumulasi broker menjadi penentu akhir menuju Buy (46 sampel murni)."><span>BUY</span><small>broker mendukung</small></div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span class="branch-tag false">FALSE · uptrend</span>
+                        <div class="decision-node buy flow-leaf" tabindex="0" title="Volume tidak rendah dan tren sudah Uptrend → Buy (89 sampel murni)."><span>BUY</span><small>tren mendukung</small></div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tree-image-badge"><span class="status-dot"></span> Hover node untuk detail · 19 node model</div>
+    </div>
+
+    <div class="data-panel">
+      <p class="panel-label">DATASET / SNAPSHOT</p>
+      <h3>Stock Trading<br />Categorical</h3>
+      <p>Data historis dengan fitur kategorikal untuk membaca momentum pasar, ringkasan broker, volume transaksi, dan tekanan orderbook.</p>
+      <div class="data-tags"><span>One-hot encoded</span><span>DecisionTreeClassifier</span><span>Entropy / ID3</span></div>
+      <div class="tree-links">
+        <a class="text-link" href="{{ url_for('prediksi') }}">Uji sinyal kamu <span>→</span></a
+        ><a class="text-link" href="{{ url_for('tree_image') }}" target="_blank" rel="noopener">Buka tree asli hasil notebook <span>↗</span></a>
+      </div>
+      <details class="tree-guide">
+        <summary>Cara membaca decision tree</summary>
+        <p>
+          Mulai dari kotak paling atas. Ikuti cabang sesuai kondisi input kamu sampai bertemu kotak <strong>BUY</strong> atau <strong>WAIT</strong>. Kotak berwarna adalah kesimpulan akhir, sedangkan kotak putih/biru adalah fitur yang
+          diperiksa model.
+        </p>
+      </details>
+    </div>
+  </div>
+
+  <div class="tree-image-link">
+    <div>
+      <p class="panel-label">GENERATED ARTIFACT / EDA.IPYNB</p>
+      <strong>Decision tree aktual dari pipeline retraining</strong>
+      <p>Gambar ini dibuat oleh cell visualisasi pada notebook, bukan ilustrasi dashboard.</p>
+    </div>
+    <a class="button button-primary" href="{{ url_for('tree_image') }}" target="_blank" rel="noopener">Lihat gambar penuh <span>↗</span></a>
+  </div>
+</section>
+
+<section class="rules-section">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow"><span class="eyebrow-line"></span>Rulebook / 03</p>
+      <h2>Aturan yang bisa diaudit.</h2>
+    </div>
+    <span class="mono muted">rules.txt / active</span>
+  </div>
+  <div class="rule-list generated-rules">
+    {% for rule in rules_text.split('\n\n') %}
+    <div class="rule-row"><span class="rule-number">{{ '%02d'|format(loop.index) }}</span><code>{{ rule }}</code></div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}
