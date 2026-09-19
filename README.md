@@ -409,6 +409,14 @@ On the dashboard, hovering or keyboard-focusing any node reveals a short explana
 
 ---
 
+## Live Demo
+
+This application is officially deployed and hosted on **PythonAnywhere**. You can explore the dashboard, view the extracted rulebook, and try the Prediction Desk directly from your browser without any local installation:
+
+👉 **[Try SignalTree Live on PythonAnywhere](https://daffi.pythonanywhere.com/)**
+
+> **Note:** If you are visiting for the first time in a while, the app might take a few seconds to wake up.
+
 ## Author
 
 **Muhammad Daffi Izzuddin**
